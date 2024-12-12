@@ -1,139 +1,70 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:laundry_master/views/history.dart';
 import 'package:laundry_master/views/order_screen.dart';
 import 'package:laundry_master/views/order_tracking_screen.dart';
 import 'package:laundry_master/views/price_screen.dart';
-import 'package:laundry_master/views/support_center.dart';
-
-import 'views/feedback_scrn.dart';
-
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Laundry Master"),
-//         actions: [
-//           IconButton(
-//             icon: const Icon(Icons.help),
-//             onPressed: () => Navigator.push(
-//               context,
-//               MaterialPageRoute(builder: (context) => const SupportScreen()),
-//             ),
-//           ),
-//         ],
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             Expanded(
-//               child: ListView(
-//                 children: [
-//                   ListTile(
-//                     leading: const Icon(Icons.local_laundry_service),
-//                     title: const Text("Make an Order"),
-//                     onTap: () => Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => MakeOrderScreen()),
-//                     ),
-//                   ),
-//                   ListTile(
-//                     leading: const Icon(Icons.history),
-//                     title: const Text("Order History"),
-//                     onTap: () => Navigator.push(
-//                       context,
-//                       MaterialPageRoute(
-//                           builder: (context) => OrderHistoryScreen()),
-//                     ),
-//                   ),
-//                   ListTile(
-//                     leading: const Icon(Icons.feedback),
-//                     title: const Text("Leave Feedback"),
-//                     onTap: () => Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => FeedbackScreen()),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-            // StreamBuilder(
-            //   stream: FirebaseFirestore.instance
-            //       .collection('orders')
-            //       .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-            //       .orderBy('createdAt', descending: true)
-            //       .snapshots(),
-            //   builder: (context, snapshot) {
-            //     if (!snapshot.hasData) return const CircularProgressIndicator();
-
-            //     final order = snapshot.data!.docs.first;
-            //     final status = order['status'];
-
-            //     return Card(
-            //       child: ListTile(
-            //         title: Text("Order Status: $status"),
-            //         subtitle: const Text("Track your latest order here."),
-            //         onTap: () => Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => OrderTrackingScreen(orderId: order.id)),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Laundry Master'),
-        centerTitle: true,
-        backgroundColor: Colors.deepPurpleAccent,
-        elevation: 0,
-      ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Welcome Banner
             Container(
-              padding: const EdgeInsets.all(20),
-              decoration: const BoxDecoration(
-                color: Colors.deepPurpleAccent,
-                borderRadius: BorderRadius.only(
+              padding: EdgeInsets.only(
+                  left: 20, right: 30, top: h * 0.08, bottom: h * 0.03),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Colors.blue, Colors.lightBlueAccent],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    offset: const Offset(0, 5),
+                    blurRadius: 15,
+                    color: Colors.blue.withOpacity(0.3),
+                  ),
+                ],
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Welcome to Laundry Master!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.local_laundry_service,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Laundry Master',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   Text(
-                    'Enjoy fast, reliable, and affordable laundry services at your fingertips.',
+                    'Fast, reliable, and affordable laundry services at your fingertips.',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white70,
@@ -143,17 +74,20 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             // Quick Actions
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 'Quick Actions',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
 
             GridView(
               shrinkWrap: true,
@@ -170,15 +104,21 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.local_offer,
                   label: 'View Prices',
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  PricesScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PricesScreen()));
                   },
                   color: Colors.blueAccent,
                 ),
                 _buildActionTile(
                   icon: Icons.shopping_cart,
-                  label: 'Make an Order',
+                  label: 'Request Service',
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> MakeOrderScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MakeOrderScreen()));
                   },
                   color: Colors.greenAccent,
                 ),
@@ -186,32 +126,54 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.track_changes,
                   label: 'Track Order',
                   onTap: () {
-                    Navigator.pushNamed(context, '/trackOrder');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrderTrackingScreen()));
                   },
                   color: Colors.orangeAccent,
                 ),
                 _buildActionTile(
                   icon: Icons.history,
-                  label: 'Order History',
+                  label: 'History',
                   onTap: () {
-                    Navigator.pushNamed(context, '/orderHistory');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                OrderHistoryScreen(userId: userId)));
                   },
                   color: Colors.purpleAccent,
                 ),
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             // About Section
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 4,
+                    color: Colors.black12,
+                  ),
+                ],
+              ),
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    textAlign: TextAlign.center,
                     'About Us',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent),
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -240,19 +202,19 @@ class HomeScreen extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: color, width: 1.5),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: color, width: 2),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: color, size: 30),
+            Icon(icon, color: color, size: 35),
             const SizedBox(height: 10),
             Text(
               label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 color: color,
                 fontWeight: FontWeight.w600,
               ),

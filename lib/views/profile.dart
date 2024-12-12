@@ -35,7 +35,8 @@ class ProfilePage extends StatelessWidget {
               backgroundColor: Colors.deepPurpleAccent.withOpacity(0.3),
               child: const CircleAvatar(
                 radius: 55,
-                backgroundImage: AssetImage('assets/profile_placeholder.png'), // Add a placeholder image
+                backgroundImage: AssetImage(
+                    'assets/profile_placeholder.png'), // Add a placeholder image
               ),
             ),
             const SizedBox(height: 20),
@@ -84,7 +85,8 @@ class ProfilePage extends StatelessWidget {
               onTap: () => onEditProfile(),
             ),
             ListTile(
-              leading: const Icon(Icons.history, color: Colors.deepPurpleAccent),
+              leading:
+                  const Icon(Icons.history, color: Colors.deepPurpleAccent),
               title: const Text(
                 'Order History',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
@@ -99,9 +101,13 @@ class ProfilePage extends StatelessWidget {
               leading: const Icon(Icons.logout, color: Colors.redAccent),
               title: const Text(
                 'Log Out',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.redAccent),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.redAccent),
               ),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.redAccent),
+              trailing: const Icon(Icons.arrow_forward_ios,
+                  size: 16, color: Colors.redAccent),
               onTap: () {
                 // Log out function
                 showDialog(

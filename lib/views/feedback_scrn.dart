@@ -4,9 +4,12 @@ class FeedbackScreen extends StatelessWidget {
   final TextEditingController feedbackController = TextEditingController();
   int rating = 3;
 
+  FeedbackScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(title: const Text("Feedback")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
