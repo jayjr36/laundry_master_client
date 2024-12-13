@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:laundry_master/firebase_options.dart';
-import 'package:laundry_master/login.dart';
 import 'package:laundry_master/splash.dart';
 
 void main() async {
